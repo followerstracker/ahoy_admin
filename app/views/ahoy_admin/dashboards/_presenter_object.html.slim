@@ -1,0 +1,31 @@
+
+.px-4.mb-4
+  = link_to "back to the list", url_for(ref: nil, period: params[:period])
+
+h6.px-4.my-4.text-center
+  = presenter.dimension.humanize
+  |:&nbsp;&nbsp;
+  span.text-muted
+    = presenter.dimension_human(presenter.ref)
+
+h6.mb-3.text-center
+  = presenter.metric.humanize
+
+= ahoy_admin_chart_column(presenter.chart_html_id, presenter.data_chart)
+
+table.table.table-striped.table-sm.mt-4
+  caption.caption-top.text-center
+    |Data Table
+  col
+  col width="100%"
+  thead
+    tr
+      th.px-2.text-end #
+      th.px-2 Date
+      th.px-2.text-end = presenter.metric.to_s.humanize
+  tbody
+    - presenter.object.each.with_index do |data, idx|
+      tr
+        td.px-2.text-muted = sprintf("%02d", idx + 1)
+        td.px-2 = data[0].to_s(:long)
+        td.px-2.text-end.text-muted = data[1]

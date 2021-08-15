@@ -1,0 +1,36 @@
+table.table.table-bordered.text-end.mb-4
+  thead
+    tr
+      th Visits
+      th Views
+      th Bounce Rate
+      th Avg Session
+  tbody
+    tr
+      td = @presenter.total_visits
+      td = @presenter.total_views
+      td = "#{@presenter.total_bounce_rates}%"
+      td = "#{@presenter.total_avg_session_durations}s"
+
+.row
+  .col-12.col-xxl-6.mb-4
+    h6.text-center Visits
+    = ahoy_admin_chart_column("chart-visits", @presenter.visits_chart.to_json)
+  .col-12.col-xxl-6
+    h6.text-center Views
+    = ahoy_admin_chart_column("chart-views", @presenter.views_chart.to_json)
+  .col-12.col-xxl-6.mb-4
+    h6.text-center Bounce Rate (%)
+    = ahoy_admin_chart_column("chart-bounce-rate", @presenter.bounce_rates_chart.to_json)
+  .col-12.col-xxl-6.mb-4
+    h6.text-center Avg Session Duration (seconds)
+    = ahoy_admin_chart_column("chart-avg-session", @presenter.avg_session_durations_chart.to_json)
+  .col-12.col-xxl-6.my-4
+    = render partial: "presenter_collection", locals: { presenter: @presenter.views_by_page, pagination: false }
+  .col-12.col-xxl-6.my-4
+    = render partial: "presenter_collection", locals: { presenter: @presenter.visits_by_referrer, pagination: false }
+  .col-12.col-xxl-6.my-4
+    = render partial: "presenter_collection", locals: { presenter: @presenter.visits_by_country, pagination: false }
+  .col-12.col-xxl-6.my-4
+    = render partial: "presenter_collection", locals: { presenter: @presenter.visits_by_bot, pagination: false }
+    = render partial: "presenter_collection", locals: { presenter: @presenter.visits_by_device, pagination: false }

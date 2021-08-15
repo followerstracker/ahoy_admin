@@ -1,0 +1,25 @@
+
+table.table.table-striped.table-sm
+  caption.caption-top.text-center
+    = link_to presenter.unique_name.titleize, widget_dashboards_path(widget: presenter.unique_name, period: params[:period])
+  col width="100%"
+  thead
+    tr
+      th = presenter.dimension.humanize
+      th.px-2.text-end = presenter.metric.humanize
+      th.px-2.text-end %
+  tbody
+    - presenter.collection.each do |item|
+      tr
+        - href = widget_dashboards_path(widget: presenter.unique_name.parameterize, period: params[:period], ref: item.dimension || 'null')
+        td.px-2
+          a href=href title=presenter.dimension_human(item.dimension)
+            = presenter.dimension_human(item.dimension)
+        td.px-2.text-end
+          = item.metric
+        td.px-2.text-end.text-muted
+          = sprintf("%05.2f", item.metric.to_f / presenter.collection_total * 100)
+
+- if pagination
+  .d-flex.justify-content-center.m-4.pt-2
+    == pagy_bootstrap_nav(presenter.pagy)

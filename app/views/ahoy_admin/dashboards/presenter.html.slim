@@ -1,0 +1,5 @@
+- if presenter.ref
+  = render partial: "presenter_object", locals: { presenter: presenter}
+- else
+  = render partial: "presenter_collection", locals: { presenter: presenter, pagination: true }
+

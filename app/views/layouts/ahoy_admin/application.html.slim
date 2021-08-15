@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title
+      = AhoyAdmin::Engine.config.head_title
+
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta name="description" content=AhoyAdmin::Engine.config.head_meta_description
+    meta name="keywords" content=AhoyAdmin::Engine.config.head_meta_keywords
+
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag "ahoy_admin/application", media: "all"
+    = javascript_include_tag "ahoy_admin/application"
+
+    = javascript_include_tag "https://cdn.jsdelivr.net/npm/uplot@1.6.7/dist/uPlot.iife.min.js"
+    link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uplot@1.6.7/dist/uPlot.min.css"
+
+    link rel="icon" type="image/png" href=AhoyAdmin::Engine.config.head_favicon_url
+  body
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-4
+      .container
+        a.navbar-brand href="/"
+          = AhoyAdmin::Engine.config.brand_name
+        /button.navbar-toggler data-bs-toggle="collapse" type="button"
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse
+          ul.navbar-nav.me-auto.mb-2.mb-lg-0
+            li.nav-item
+              a.nav-link href=root_path Overview
+            /li.nav-item
+              a.nav-link href="#"  Link
+            /li.nav-item
+              a.nav-link.disabled aria-disabled="true" href="#" tabindex="-1"  Disabled
+            /li.nav-item.dropdown
+              a.nav-link.dropdown-toggle aria-expanded="false" data-bs-toggle="dropdown" href="#"  Dropdown
+              ul.dropdown-menu
+                li
+                  a.dropdown-item href="#"  Action
+                li
+                  a.dropdown-item href="#"  Another action
+                li
+                  a.dropdown-item href="#"  Something else here
+
+
+    .container
+      .row
+        .col-xl-3.mb-4
+          - AhoyAdmin::DashboardsController::PERIODS.each_with_index do |period_group, index|
+            - period_group.each do |period|
+              = link_to_period period
+            - if index < (AhoyAdmin::DashboardsController::PERIODS.size - 1)
+              hr
+        .col-xl-9.mb-4
+          = yield
