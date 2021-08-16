@@ -100,6 +100,10 @@ class AhoyAdmin::BasePresenter
     ref ? set_object : set_collection
   end
 
+  def show_dimension_link?
+    false
+  end
+
   private
 
   def ref_clause

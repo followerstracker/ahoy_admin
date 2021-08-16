@@ -25,6 +25,10 @@ class AhoyAdmin::ViewsByPagePresenter < AhoyAdmin::BasePresenter
     url_strip(dimension)
   end
 
+  def show_dimension_link?
+    true
+  end
+
   private
 
   def base_scope
