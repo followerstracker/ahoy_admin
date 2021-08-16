@@ -6,8 +6,8 @@ WARNING: Despite the fact that it's been running in production for a while, this
 
 ## Features
 
-- [x]  Analytics for different time periods today/last 24hr/yesterday/this week/last 7 days/this month etc..
-- [x] :chart: Beatiful and lightweight charts with [uPlot](https://github.com/leeoniya/uPlot)
+- [x] :date: Analytics for different time periods today/last-24hr/yesterday/this-week/last-7-days/this-month etc..
+- [x] :chart_with_upwards_trend: Beatiful and lightweight charts with [uPlot](https://github.com/leeoniya/uPlot)
 - [ ] :muscle: Caching for heavy DB queries and templates
 - [x] :bar_chart: Top pages/bots/devices/countries etc...
 - [x] :speedboat: Lightweight and simple UI (designed and developed for public use in mind)
@@ -15,6 +15,10 @@ WARNING: Despite the fact that it's been running in production for a while, this
 ## Demo
 
 The live demo is located [here](https://followerstracker.net/site-stats)
+
+## Screenshots
+
+<img src="https://user-images.githubusercontent.com/86723496/129568055-846241f2-5932-4db7-bbef-82783ca380cb.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568104-8846e395-c189-48e8-81a0-b8a23ea8035a.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568127-dc06a34d-4eb8-47dd-9eec-22ae4ba6fabe.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568294-df674694-6c25-4d7a-9477-042ba23cabc9.png" width="180">
 
 ## Installation
 
