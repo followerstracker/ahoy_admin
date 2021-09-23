@@ -10,7 +10,7 @@ class AhoyAdmin::VisitsByCountryPresenter < AhoyAdmin::BasePresenter
   def set_collection
     visits_by_country = base_scope
       .group(:country)
-      .order("1 desc")
+      .order("1 desc, 2")
       .select("count(*) AS metric, country as dimension")
 
     self.pagy, self.collection = pagy_arel(visits_by_country)

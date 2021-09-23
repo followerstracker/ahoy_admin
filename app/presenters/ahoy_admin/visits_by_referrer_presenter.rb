@@ -10,7 +10,7 @@ class AhoyAdmin::VisitsByReferrerPresenter < AhoyAdmin::BasePresenter
   def set_collection
     visits_by_referrer = base_scope
       .group(:referring_domain)
-      .order("1 desc")
+      .order("1 desc, 2")
       .select("count(*) AS metric, referring_domain as dimension")
 
     self.pagy, self.collection = pagy_arel(visits_by_referrer)

@@ -10,7 +10,7 @@ class AhoyAdmin::ViewsByPagePresenter < AhoyAdmin::BasePresenter
   def set_collection
     views_by_page = base_scope
       .group("properties ->> 'url'")
-      .order("1 desc")
+      .order("1 desc, 2")
       .select("count(*) AS metric, properties ->> 'url' as dimension")
 
     self.pagy, self.collection = pagy_arel(views_by_page)

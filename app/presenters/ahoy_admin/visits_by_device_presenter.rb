@@ -10,7 +10,7 @@ class AhoyAdmin::VisitsByDevicePresenter < AhoyAdmin::BasePresenter
   def set_collection
     visits_by_device = base_scope
       .group(:device_type)
-      .order("1 desc")
+      .order("1 desc, 2")
       .select("count(*) AS metric, device_type as dimension")
 
     self.pagy, self.collection = pagy_arel(visits_by_device)
