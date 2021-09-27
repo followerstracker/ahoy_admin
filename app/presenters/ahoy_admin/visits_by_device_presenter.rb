@@ -13,7 +13,7 @@ class AhoyAdmin::VisitsByDevicePresenter < AhoyAdmin::BasePresenter
       .order("1 desc, 2")
       .select("count(*) AS metric, device_type as dimension")
 
-    self.pagy, self.collection = pagy_arel(visits_by_device)
+    self.pagy, self.collection = pagy_custom(visits_by_device)
 
     self.collection_total = Ahoy::Event
       .with(visits_by_device: visits_by_device.to_sql)

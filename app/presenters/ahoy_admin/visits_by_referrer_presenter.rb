@@ -13,7 +13,7 @@ class AhoyAdmin::VisitsByReferrerPresenter < AhoyAdmin::BasePresenter
       .order("1 desc, 2")
       .select("count(*) AS metric, referring_domain as dimension")
 
-    self.pagy, self.collection = pagy_arel(visits_by_referrer)
+    self.pagy, self.collection = pagy_custom(visits_by_referrer)
 
     self.collection_total = Ahoy::Event
       .with(visits_by_referrer: visits_by_referrer.to_sql)

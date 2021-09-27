@@ -13,7 +13,7 @@ class AhoyAdmin::VisitsByCountryPresenter < AhoyAdmin::BasePresenter
       .order("1 desc, 2")
       .select("count(*) AS metric, country as dimension")
 
-    self.pagy, self.collection = pagy_arel(visits_by_country)
+    self.pagy, self.collection = pagy_custom(visits_by_country)
 
     self.collection_total = Ahoy::Event
       .with(visits_by_country: visits_by_country.to_sql)

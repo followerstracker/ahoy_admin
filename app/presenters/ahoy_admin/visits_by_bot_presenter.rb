@@ -13,7 +13,7 @@ class AhoyAdmin::VisitsByBotPresenter < AhoyAdmin::BasePresenter
       .order("1 desc, 2")
       .select("count(*) AS metric, bot as dimension")
 
-    self.pagy, self.collection = pagy_arel(visits_by_bot)
+    self.pagy, self.collection = pagy_custom(visits_by_bot)
 
     self.collection_total = Ahoy::Event
       .with(visits_by_bot: visits_by_bot.to_sql)

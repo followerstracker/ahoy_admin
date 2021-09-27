@@ -106,6 +106,10 @@ class AhoyAdmin::BasePresenter
 
   private
 
+  def pagy_custom(scope)
+    pagy_arel(scope, size: [1,2,2,1])
+  end
+
   def ref_clause
     ref == "null" ? nil : ref
   end

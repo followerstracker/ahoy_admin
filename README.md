@@ -10,11 +10,11 @@ WARNING: Despite the fact that it's been running in production for a while, this
 - [x] :chart_with_upwards_trend: Beatiful and lightweight charts with [uPlot](https://github.com/leeoniya/uPlot)
 - [ ] :muscle: Caching for heavy DB queries and templates
 - [x] :bar_chart: Top pages/bots/devices/countries etc...
-- [x] :speedboat: Lightweight and simple UI (designed and developed for public use in mind)
+- [x] :speedboat: Lightweight, Mobile friendly UI
 
 ## Demo
 
-The live demo is located [here](https://followerstracker.net/site-stats)
+The live demo is located [here](https://followerstracker.com/site-stats)
 
 ## Screenshots
 

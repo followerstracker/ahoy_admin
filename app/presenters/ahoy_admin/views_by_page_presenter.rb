@@ -13,7 +13,7 @@ class AhoyAdmin::ViewsByPagePresenter < AhoyAdmin::BasePresenter
       .order("1 desc, 2")
       .select("count(*) AS metric, properties ->> 'url' as dimension")
 
-    self.pagy, self.collection = pagy_arel(views_by_page)
+    self.pagy, self.collection = pagy_custom(views_by_page)
 
     self.collection_total = Ahoy::Event
       .with(views_by_page: views_by_page.to_sql)
