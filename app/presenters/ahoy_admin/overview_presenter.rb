@@ -105,6 +105,7 @@ class AhoyAdmin::OverviewPresenter < AhoyAdmin::BasePresenter
 
     views = Ahoy::Event
       .send(group_by_method, :time, range: current_period_range)
+      .where(name: "$view")
       .group(:visit_id)
       .having("count(*) = 1")
 
