@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency("ahoy_matey", "~> 3.2.0")
   spec.add_dependency("bootstrap", "~> 5.0.1")
   spec.add_dependency("pagy", "~> 4.8.0")
-  spec.add_dependency("rails", "~> 6.1.1")
+  spec.add_dependency("rails", ">= 6")
   spec.add_dependency("slim", "~> 4.1.0")
 end
