@@ -4,7 +4,8 @@
 //require bootstrap
 //= require ahoy
 
-ahoy.trackAll();
+ahoy.trackView();
+ahoy.trackClicks("a, button, input[type=submit]");
 
 // https://stackoverflow.com/a/51190453/368144 simple namespacing
 window.namespace = (name) =>
