@@ -40,8 +40,8 @@ class AhoyAdmin::BasePresenter
       this_week: current_time.beginning_of_week..current_time.end_of_week,
       last_7_days: 7.days.ago.beginning_of_day..current_time.end_of_day,
       this_month: current_time.beginning_of_month..current_time.end_of_month,
-      last_30_days: 30.days.ago..current_time.end_of_day,
-      last_90_days: 90.days.ago..current_time.end_of_day,
+      last_30_days: 30.days.ago.beginning_of_day..current_time.end_of_day,
+      last_90_days: 90.days.ago.beginning_of_day..current_time.end_of_day,
       this_year: current_time.beginning_of_year..current_time.end_of_year,
     }[current_period]
   end
