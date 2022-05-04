@@ -3,7 +3,7 @@ class AhoyAdmin::VisitsByDevicePresenter < AhoyAdmin::BasePresenter
   def set_object
     self.object = base_scope
       .where(device_type: ref_clause)
-      .send(group_by_method, :started_at, range: current_period_range)
+      .group_by_period(group_by_period, :started_at, range: current_period_range)
       .count
   end
 

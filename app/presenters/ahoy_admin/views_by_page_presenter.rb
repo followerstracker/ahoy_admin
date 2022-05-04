@@ -3,7 +3,7 @@ class AhoyAdmin::ViewsByPagePresenter < AhoyAdmin::BasePresenter
   def set_object
     self.object = base_scope
       .where("properties ->> 'url' = ?", ref_clause)
-      .send(group_by_method, :time, range: current_period_range)
+      .group_by_period(group_by_period, :time, range: current_period_range)
       .count
   end
 

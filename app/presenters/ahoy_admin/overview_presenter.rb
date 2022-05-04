@@ -10,53 +10,61 @@ class AhoyAdmin::OverviewPresenter < AhoyAdmin::BasePresenter
     end
   end
 
+  def initialize(*args, **kw)
+    super
+
+    # pre-fetching data
+    chart_views
+    chart_visits
+    chart_avg_session_durations
+    chart_bounce_rates
+    total_views
+    total_visits
+  end
+
   def set_data
     # do nothing
   end
 
-  def views_data
-    return @views_data if @views_data
+  memoize def data_views
     views = Ahoy::Event
       .where(time: current_period_range)
       .where(name: "$view")
-      .send(group_by_method, :time, range: current_period_range)
+      .group_by_period(group_by_period, :time, range: current_period_range)
       .order("2")
 
     views = views.joins(:visit).where(ahoy_visits: { bot: nil }) if bots_column?
-    @views_data = views.count
+    views.count
   end
 
-  def views_chart
-    chart_adjustment(views_data)
+  memoize def chart_views
+    chart_adjustment(data_views)
   end
 
-  def visits_data
-    return @visits_data if @visits_data
+  memoize def data_visits
     visits = Ahoy::Visit
       .where(started_at: current_period_range)
-      .send(group_by_method, :started_at, range: current_period_range)
+      .group_by_period(group_by_period, :started_at, range: current_period_range)
       .order("2")
     visits = visits.where(bot: nil) if bots_column?
-    @visits_data = visits.count
+    visits.count
   end
 
-  def visits_chart
-    chart_adjustment(visits_data)
+  memoize def chart_visits
+    chart_adjustment(data_visits)
   end
 
-  def bounce_rates
-    views_single_page.map.with_index do |data, idx|
-      [data[0], (data[1].zero? ? 0 : data[1].to_f / views_all[idx].last).round(2) * 100]
+  memoize def data_bounce_rates
+    data_views_single_page.map.with_index do |data, idx|
+      [data[0], (data[1].zero? ? 0 : data[1].to_f / data_views_all[idx].last).round(2) * 100]
     end
   end
 
-  def bounce_rates_chart
-    chart_adjustment(bounce_rates)
+  memoize def chart_bounce_rates
+    chart_adjustment(data_bounce_rates)
   end
 
-  def avg_session_durations
-    return @avg_session_durations if @avg_session_durations
-
+  memoize def data_avg_session_durations
     durations = Ahoy::Visit
       .where(started_at: current_period_range)
       .joins(:events)
@@ -67,65 +75,60 @@ class AhoyAdmin::OverviewPresenter < AhoyAdmin::BasePresenter
 
     durations_avg = Ahoy::Visit
       .from("(#{durations.to_sql}) ahoy_visits")
-      .send(group_by_method, :started_at, range: current_period_range)
+      .group_by_period(group_by_period, :started_at, range: current_period_range)
       .average(:duration)
 
-    @avg_session_durations = durations_avg
+    durations_avg
   end
 
-  def avg_session_durations_chart
-    chart_adjustment(avg_session_durations)
+  memoize def chart_avg_session_durations
+    chart_adjustment(data_avg_session_durations)
   end
 
   def pages_data
   end
 
-  def total_views
-    views_data.values.reduce(:+)
+  memoize def total_views
+    data_views.values.reduce(:+)
   end
 
-  def total_visits
-    visits_data.values.reduce(:+)
+  memoize def total_visits
+    data_visits.values.reduce(:+)
   end
 
-  def total_bounce_rates
-    (views_single_page.sum(&:last).to_f / views_all.sum(&:last) * 100).round(2)
+  memoize def total_bounce_rates
+    (data_views_single_page.sum(&:last).to_f / data_views_all.sum(&:last) * 100).round(2)
   end
 
-  def total_avg_session_durations
-    durations = avg_session_durations.map(&:last).map(&:to_i)
+  memoize def total_avg_session_durations
+    durations = data_avg_session_durations.map(&:last).map(&:to_i)
     sum = durations.reduce(:+)
     (sum / durations.size).to_i
   end
 
   private
 
-  def views_single_page
-    return @views_single_page if @views_single_page
-
+  memoize def data_views_single_page
     views = Ahoy::Event
-      .send(group_by_method, :time, range: current_period_range)
+      .group_by_period(group_by_period, :time, range: current_period_range)
       .where(name: "$view")
       .group(:visit_id)
       .having("count(*) = 1")
 
     views = views.joins(:visit).where(ahoy_visits: { bot: nil }) if bots_column?
 
-    views = views.count
+    subq = views.select("#{views.group_values[0]} as period", "count(*) as count_all").to_sql
+    views = Ahoy::Event.from("(#{subq}) subq")
+      .group(:period)
+      .pluck(:period, Arel.sql("sum(count_all)"))
 
-    views = views.group_by { |i| i[0][0] }
-      .transform_values { |values| values.map(&:last).sum }
-      .sort_by(&:first)
-
-    @views_single_page = views
+    views
   end
 
-  def views_all
-    return @views_all if @views_all
-
+  memoize def data_views_all
     views = Ahoy::Event
       .where(name: "$view")
-      .send(group_by_method, :time, range: current_period_range)
+      .group_by_period(group_by_period, :time, range: current_period_range)
 
     views = views.joins(:visit).where(ahoy_visits: { bot: nil }) if bots_column?
     views = views.count
@@ -133,9 +136,7 @@ class AhoyAdmin::OverviewPresenter < AhoyAdmin::BasePresenter
     views = views.group_by(&:first)
       .transform_values { |values| values.map(&:last).sum }
       .sort_by(&:first)
-
-
-    @views_all = views
+    views
   end
 
 end

@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("ahoy_matey", "~> 4.0")
   spec.add_dependency("bootstrap", "~> 5.1")
   spec.add_dependency("pagy")
+  spec.add_dependency("memery")
   spec.add_dependency("rails", ">= 6")
   spec.add_dependency("slim")
 end

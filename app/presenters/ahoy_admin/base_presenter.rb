@@ -1,5 +1,6 @@
 class AhoyAdmin::BasePresenter
   include Pagy::Backend
+  include Memery
 
   attr_accessor(
     :collection_total,
@@ -7,7 +8,7 @@ class AhoyAdmin::BasePresenter
     :current_period_range,
     :current_period,
     :current_time,
-    :group_by_method,
+    :group_by_period,
     :object,
     :page,
     :pagy,
@@ -28,7 +29,7 @@ class AhoyAdmin::BasePresenter
     self.ref = ref
 
     set_current_period_range
-    set_group_by_method
+    set_group_by_period
     set_data
   end
 
@@ -46,17 +47,17 @@ class AhoyAdmin::BasePresenter
     }[current_period]
   end
 
-  def set_group_by_method
-    self.group_by_method = {
-      today: :group_by_hour,
-      last_24_hours: :group_by_hour,
-      yesterday: :group_by_hour,
-      this_week: :group_by_day,
-      last_7_days: :group_by_day,
-      this_month: :group_by_day,
-      last_30_days: :group_by_day,
-      last_90_days: :group_by_day,
-      this_year: :group_by_month,
+  def set_group_by_period
+    self.group_by_period = {
+      today: :hour,
+      last_24_hours: :hour,
+      yesterday: :hour,
+      this_week: :day,
+      last_7_days: :day,
+      this_month: :day,
+      last_30_days: :day,
+      last_90_days: :day,
+      this_year: :month,
     }[current_period]
   end
 

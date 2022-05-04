@@ -15,16 +15,16 @@ table.table.table-bordered.text-end.mb-4
 .row
   .col-12.col-xxl-6.mb-4
     h6.text-center Visits
-    = ahoy_admin_chart_column("chart-visits", @presenter.visits_chart.to_json)
+    = ahoy_admin_chart_column("chart-visits", @presenter.chart_visits.to_json)
   .col-12.col-xxl-6
     h6.text-center Views
-    = ahoy_admin_chart_column("chart-views", @presenter.views_chart.to_json)
+    = ahoy_admin_chart_column("chart-views", @presenter.chart_views.to_json)
   .col-12.col-xxl-6.mb-4
     h6.text-center Bounce Rate (%)
-    = ahoy_admin_chart_column("chart-bounce-rate", @presenter.bounce_rates_chart.to_json)
+    = ahoy_admin_chart_column("chart-bounce-rate", @presenter.chart_bounce_rates.to_json)
   .col-12.col-xxl-6.mb-4
     h6.text-center Avg Session Duration (seconds)
-    = ahoy_admin_chart_column("chart-avg-session", @presenter.avg_session_durations_chart.to_json)
+    = ahoy_admin_chart_column("chart-avg-session", @presenter.chart_avg_session_durations.to_json)
   .col-12.col-xxl-6.my-4
     = render partial: "presenter_collection", locals: { presenter: @presenter.views_by_page, pagination: false }
   .col-12.col-xxl-6.my-4
