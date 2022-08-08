@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AhoyAdmin
   module ApplicationHelper
     include Pagy::Frontend

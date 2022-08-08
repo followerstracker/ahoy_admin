@@ -1,6 +1,4 @@
-require "bootstrap"
-require "pagy/extras/arel"
-require "pagy/extras/bootstrap"
+# frozen_string_literal: true
 
 module AhoyAdmin
   class Engine < ::Rails::Engine
@@ -28,14 +26,14 @@ module AhoyAdmin
     config.domains = []
     config.time_zone = "UTC"
     config.current_user_method = :current_user
-    config.current_user_admin = lambda { |user| user&.admin? || Rails.env.development? }
-    config.widgets = %w(
+    config.current_user_admin = ->(user) { user&.admin? || Rails.env.development? }
+    config.widgets = %w[
       views_by_page
       visits_by_bot
       visits_by_country
       visits_by_device
       visits_by_referrer
-    )
+    ]
   end
 
   class << self

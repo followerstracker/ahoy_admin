@@ -1,31 +1,34 @@
-class AhoyAdmin::VisitsByBotPresenter < AhoyAdmin::BasePresenter
+# frozen_string_literal: true
 
-  def set_object
-    self.object = base_scope
-      .where(bot: ref_clause)
-      .group_by_period(group_by_period, :started_at, range: current_period_range)
-      .count
-  end
+module AhoyAdmin
+  class VisitsByBotPresenter < AhoyAdmin::BasePresenter
+    def set_object
+      self.object = base_scope
+        .where(bot: ref_clause)
+        .group_by_period(group_by_period, :started_at, range: current_period_range)
+        .count
+    end
 
-  def set_collection
-    visits_by_bot = base_scope
-      .group(:bot)
-      .order("1 desc, 2")
-      .select("count(*) AS metric, bot as dimension")
+    def set_collection
+      visits_by_bot = base_scope
+        .group(:bot)
+        .order("1 desc, 2")
+        .select("count(*) AS metric, bot as dimension")
 
-    self.pagy, self.collection = pagy_custom(visits_by_bot)
+      self.pagy, self.collection = pagy_custom(visits_by_bot)
 
-    self.collection_total = Ahoy::Event
-      .with(visits_by_bot: visits_by_bot.to_sql)
-      .from("visits_by_bot")
-      .pick("sum(metric)::integer")
-  end
+      self.collection_total = Ahoy::Event
+        .with(visits_by_bot: visits_by_bot.to_sql)
+        .from("visits_by_bot")
+        .pick("sum(metric)::integer")
+    end
 
-  private
+    private
 
-  def base_scope
-    Ahoy::Visit
-      .where(started_at: current_period_range)
-      .where.not(bot: nil)
+    def base_scope
+      Ahoy::Visit
+        .where(started_at: current_period_range)
+        .where.not(bot: nil)
+    end
   end
 end

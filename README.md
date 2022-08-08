@@ -20,6 +20,10 @@ The live demo is located [here](https://followerstracker.com/site-stats)
 
 <img src="https://user-images.githubusercontent.com/86723496/129568055-846241f2-5932-4db7-bbef-82783ca380cb.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568104-8846e395-c189-48e8-81a0-b8a23ea8035a.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568127-dc06a34d-4eb8-47dd-9eec-22ae4ba6fabe.png" width="180"> <img src="https://user-images.githubusercontent.com/86723496/129568294-df674694-6c25-4d7a-9477-042ba23cabc9.png" width="180">
 
+## Limitations
+
+* PostgreSQL support **only** at this moment
+
 ## Installation
 
 ```Gemfile
@@ -38,15 +42,15 @@ Add a configuration to initializers, `config/initializers/ahoy_admin.rb`:
 
 ```ruby
 AhoyAdmin.configure do |config|
-    config.head_title = "Ahoy Admin"
-    config.head_meta_description = "Ahoy Admin Panel"
-    config.head_meta_keywords = "ahoy, admin, panel, analytics"
-    config.head_favicon_url = "/favicon.ico"
-    config.brand_name = "Ahoy Admin"
-    config.domains = []
-    config.time_zone = "UTC"
-    config.current_user_method = :current_user
-    config.current_user_admin = lambda { |user| user&.admin? || Rails.env.development? }
+  config.head_title = "Ahoy Admin"
+  config.head_meta_description = "Ahoy Admin Panel"
+  config.head_meta_keywords = "ahoy, admin, panel, analytics"
+  config.head_favicon_url = "/favicon.ico"
+  config.brand_name = "Ahoy Admin"
+  config.domains = []
+  config.time_zone = "UTC"
+  config.current_user_method = :current_user
+  config.current_user_admin = lambda { |user| user&.admin? || Rails.env.development? }
 end
 ```
 

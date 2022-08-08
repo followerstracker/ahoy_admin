@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  database: ahoy_admin_test
+  username: postgres
+  host: localhost
