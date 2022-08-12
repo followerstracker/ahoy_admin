@@ -5,8 +5,11 @@ html
       = AhoyAdmin::Engine.config.head_title
 
     meta name="viewport" content="width=device-width,initial-scale=1"
-    meta name="description" content=AhoyAdmin::Engine.config.head_meta_description
-    meta name="keywords" content=AhoyAdmin::Engine.config.head_meta_keywords
+    - if AhoyAdmin::Engine.config.head_meta_noindex
+      meta name="robots" content="noindex"
+    - else
+      meta name="description" content=AhoyAdmin::Engine.config.head_meta_description
+      meta name="keywords" content=AhoyAdmin::Engine.config.head_meta_keywords
 
     = csrf_meta_tags
     = csp_meta_tag

@@ -42,15 +42,23 @@ Add a configuration to initializers, `config/initializers/ahoy_admin.rb`:
 
 ```ruby
 AhoyAdmin.configure do |config|
-  config.head_title = "Ahoy Admin"
+  config.brand_name = "Ahoy Admin"
+  config.current_user_admin = lambda { |user| user&.admin? || Rails.env.development? }
+  config.current_user_method = :current_user
+  config.domains = []
+  config.head_favicon_url = "/favicon.ico"
   config.head_meta_description = "Ahoy Admin Panel"
   config.head_meta_keywords = "ahoy, admin, panel, analytics"
-  config.head_favicon_url = "/favicon.ico"
-  config.brand_name = "Ahoy Admin"
-  config.domains = []
+  config.head_meta_noindex = false
+  config.head_title = "Ahoy Admin"
   config.time_zone = "UTC"
-  config.current_user_method = :current_user
-  config.current_user_admin = lambda { |user| user&.admin? || Rails.env.development? }
+  config.widgets = %w[
+    views_by_page
+    visits_by_bot
+    visits_by_country
+    visits_by_device
+    visits_by_referrer
+  ]
 end
 ```
 
