@@ -118,8 +118,8 @@ module AhoyAdmin
 
       subq = views.select("#{views.group_values[0]} as period", "count(*) as count_all").to_sql
       Ahoy::Event.from("(#{subq}) subq")
-        .group(:period)
-        .pluck(:period, Arel.sql("sum(count_all)"))
+        .group_by_period(group_by_period, :period, range: current_period_range)
+        .sum(:count_all)
     end
 
     memoize def data_views_all
